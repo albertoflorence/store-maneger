@@ -2,7 +2,7 @@ const { expect, use } = require('chai');
 const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const services = require('../../../src/services');
-const { getAll, getById } = require('../../../src/controllers/products.controller');
+const { getAll, getById, create } = require('../../../src/controllers/products.controller');
 
 use(sinonChai);
 
@@ -25,8 +25,8 @@ describe('products.controller()', function () {
   });
   it('should return a product by id', async function () {
     const expectedResult = { id: 3, name: 'Product 3' };
-    const req = { params: { id: 3 } };
     sinon.stub(services.products, 'getById').resolves(expectedResult);
+    const req = { params: { id: 3 } };
     await getById(req, res);
     expect(res.status).to.have.been.calledOnceWith(200);
     expect(res.json).to.have.been.calledOnceWith(expectedResult);
@@ -37,5 +37,13 @@ describe('products.controller()', function () {
     await getById(req, res);
     expect(res.status).to.have.been.calledOnceWith(404);
     expect(res.json).to.have.been.calledOnceWith({ message: 'Product not found' });
+  });
+  it('should create a product', async function () {
+    const expectedResult = { id: 3, name: 'New Product' };
+    sinon.stub(services.products, 'create').resolves(expectedResult);
+    const req = { body: { name: 'New Product' } };
+    await create(req, res);
+    expect(res.status).to.have.been.calledOnceWith(201);
+    expect(res.json).to.have.been.calledOnceWith(expectedResult);
   });
 });
