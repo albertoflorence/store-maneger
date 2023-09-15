@@ -23,9 +23,17 @@ const deleteOne = async (req, res) => {
   handleResponse(res, result);
 };
 
+const update = async (req, res) => {
+  const { productId, saleId } = req.params;
+  const { quantity } = req.body;
+  const result = await sales.update({ productId, saleId, quantity });
+  handleResponse(res, result);
+};
+
 module.exports = {
   getAll,
   getById,
   create,
   deleteOne,
+  update,
 };

@@ -2,7 +2,7 @@ const { expect, use } = require('chai');
 const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const connection = require('../../../src/models/connection');
-const { getAll, getById, create } = require('../../../src/models/sales-products.model');
+const { getAll, getById, create, update } = require('../../../src/models/sales-products.model');
 
 use(sinonChai);
 
@@ -25,6 +25,11 @@ describe('sales-products()', function () {
   it('should create a product sale', async function () {
     sinon.stub(connection, 'query').resolves();
     const result = await create();
+    expect(result).to.be.equal(undefined);
+  });
+  it('should update a product sale', async function () {
+    sinon.stub(connection, 'execute').resolves();
+    const result = await update();
     expect(result).to.be.equal(undefined);
   });
 });
