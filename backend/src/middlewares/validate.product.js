@@ -1,10 +1,9 @@
 const joi = require('joi');
 
-const schema = joi.object({
-  name: joi.string().min(5).required(),
-});
+const name = joi.string().min(5).required();
+const id = joi.number().integer().positive();
 
-const create = async (req, res, next) => {
+const handleValidate = (schema) => (req, res, next) => {
   const { error } = schema.validate(req.body);
 
   if (error) {
@@ -15,6 +14,10 @@ const create = async (req, res, next) => {
   next();
 };
 
+const create = handleValidate(joi.object({ name }));
+const update = handleValidate(joi.object({ name, id }));
+
 module.exports = {
   create,
+  update,
 };

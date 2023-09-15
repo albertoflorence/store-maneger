@@ -18,8 +18,16 @@ const create = async (req, res) => {
   handleResponse(res, result);
 };
 
+const update = async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+  const result = await products.update(id, name);
+  handleResponse(res, result);
+};
+
 module.exports = {
   getAll,
   getById,
   create,
+  update,
 };

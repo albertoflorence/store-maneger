@@ -2,7 +2,7 @@ const { expect, use } = require('chai');
 const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const services = require('../../../src/services');
-const { getAll, getById, create } = require('../../../src/controllers/products.controller');
+const { getAll, getById, create, update } = require('../../../src/controllers/products.controller');
 const { OK, CREATED } = require('../../../src/utils/codes');
 
 use(sinonChai);
@@ -35,6 +35,13 @@ describe('products.controller()', function () {
     const req = { body: { name: 'New Product' } };
     await create(req, res);
     expect(res.status).to.have.been.calledOnceWith(201);
+    expect(res.json).to.have.been.calledOnceWith('data');
+  });
+  it('should return the updated product', async function () {
+    sinon.stub(services.products, 'update').resolves({ code: OK, data: 'data' });
+    const req = { body: { name: 'Updated Product' }, params: { id: 1 } };
+    await update(req, res);
+    expect(res.status).to.have.been.calledOnceWith(200);
     expect(res.json).to.have.been.calledOnceWith('data');
   });
 });
