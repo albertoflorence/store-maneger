@@ -2,8 +2,8 @@ const { expect, use } = require('chai');
 const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const services = require('../../../src/services');
-const { getAll, getById, create, update } = require('../../../src/controllers/products.controller');
-const { OK, CREATED } = require('../../../src/utils/codes');
+const { getAll, getById, create, update, deleteOne } = require('../../../src/controllers/products.controller');
+const { OK, CREATED, NO_CONTENT } = require('../../../src/utils/codes');
 
 use(sinonChai);
 
@@ -43,5 +43,12 @@ describe('products.controller()', function () {
     await update(req, res);
     expect(res.status).to.have.been.calledOnceWith(200);
     expect(res.json).to.have.been.calledOnceWith('data');
+  });
+  it('should delete a product', async function () {
+    sinon.stub(services.products, 'deleteOne').resolves({ code: NO_CONTENT });
+    const req = { params: { id: 1 } };
+    await deleteOne(req, res);
+    expect(res.status).to.have.been.calledOnceWith(204);
+    expect(res.json).to.have.been.calledOnceWith(undefined);
   });
 });

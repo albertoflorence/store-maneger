@@ -32,6 +32,7 @@ describe('sales.services()', function () {
   it('should create a sale', async function () {
     sinon.stub(models.sales, 'create').resolves(5);
     sinon.stub(models.salesProducts, 'create').resolves();
+    sinon.stub(models.products, 'getById').resolves('product');
     const products = [
       { productId: 1, quantity: 2 },
       { productId: 2, quantity: 3 },

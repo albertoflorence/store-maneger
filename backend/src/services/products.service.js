@@ -1,5 +1,5 @@
 const { products } = require('../models');
-const { OK, CREATED, NOT_FOUND } = require('../utils/codes');
+const { OK, CREATED, NOT_FOUND, NO_CONTENT } = require('../utils/codes');
 
 const handleProductNotFound = () => ({ code: NOT_FOUND, data: { message: 'Product not found' } });
 
@@ -30,9 +30,20 @@ const update = async (id, name) => {
   return { code: OK, data: { id: Number(id), name } };
 };
 
+const deleteOne = async (id) => {
+  const data = await products.getById(id);
+  if (!data) {
+    return handleProductNotFound();
+  }
+
+  await products.deleteOne(id);
+  return { code: NO_CONTENT };
+};
+
 module.exports = {
   getAll,
   getById,
   create,
   update,
+  deleteOne,
 };
