@@ -2,7 +2,7 @@ const { expect, use } = require('chai');
 const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const services = require('../../../src/services');
-const { getAll, getById } = require('../../../src/controllers/sales.controller');
+const { getAll, getById, create } = require('../../../src/controllers/sales.controller');
 
 use(sinonChai);
 
@@ -37,5 +37,12 @@ describe('sales.controller()', function () {
     await getById(req, res);
     expect(res.status).to.have.been.calledOnceWith(404);
     expect(res.json).to.have.been.calledOnceWith({ message: 'Sale not found' });
+  });
+  it('should return 201 and the created sale', async function () {
+    sinon.stub(services.sales, 'create').resolves('data');
+    const req = { body: [] };
+    await create(req, res);
+    expect(res.status).to.have.been.calledOnceWith(201);
+    expect(res.json).to.have.been.calledOnceWith('data');
   });
 });
