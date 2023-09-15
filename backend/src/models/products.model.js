@@ -1,7 +1,10 @@
 const connection = require('./connection');
 
-const getAll = async () => {
- const [result] = await connection.execute('SELECT * FROM products');
+const getAll = async (name = '') => {
+  const query = 'SELECT * FROM products WHERE name LIKE ?';
+  const params = [];
+  params.push(`%${name}%`);
+ const [result] = await connection.execute(query, params);
  return result;
 };
 

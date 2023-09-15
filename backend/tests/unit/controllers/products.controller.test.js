@@ -19,7 +19,7 @@ describe('products.controller()', function () {
 
   it('should return all products', async function () {
     sinon.stub(services.products, 'getAll').resolves({ code: OK, data: 'data' });
-    await getAll(undefined, res);
+    await getAll({ query: {} }, res);
     expect(res.status).to.have.been.calledOnceWith(200);
     expect(res.json).to.have.been.calledOnceWith('data');
   });

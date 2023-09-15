@@ -3,8 +3,8 @@ const { OK, CREATED, NOT_FOUND, NO_CONTENT } = require('../utils/codes');
 
 const handleProductNotFound = () => ({ code: NOT_FOUND, data: { message: 'Product not found' } });
 
-const getAll = async () => {
-  const data = await products.getAll();
+const getAll = async ({ name } = {}) => {
+  const data = await products.getAll(name);
   return { code: OK, data };
 };
 

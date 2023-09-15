@@ -1,8 +1,9 @@
 const { products } = require('../services');
 const handleResponse = require('../utils/handleResponse');
 
-const getAll = async (_, res) => {
-  const result = await products.getAll();
+const getAll = async (req, res) => {
+  const { q } = req.query;
+  const result = await products.getAll({ name: q });
   handleResponse(res, result);
 };
 

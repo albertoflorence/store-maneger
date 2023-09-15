@@ -11,6 +11,7 @@ const v = require('../middlewares/validate.product');
 const router = Router();
 
 router.get('/', getAll);
+router.get('/search', getAll);
 router.get('/:id', getById);
 router.post('/', v.create, create);
 router.put('/:id', v.update, update);
