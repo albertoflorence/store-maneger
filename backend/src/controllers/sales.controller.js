@@ -1,20 +1,20 @@
 const { sales } = require('../services');
+const status = require('../utils/codeToHttpStatus');
 
 const getAll = async (req, res) => {
-  const result = await sales.getAll();
-  res.status(200).json(result);
+  const { code, data } = await sales.getAll();
+  res.status(status[code]).json(data);
 };
 
 const getById = async (req, res) => {
   const { id } = req.params;
-  const result = await sales.getById(id);
-  if (!result.length) return res.status(404).json({ message: 'Sale not found' });
-  res.status(200).json(result);
+  const { code, data } = await sales.getById(id);
+  res.status(status[code]).json(data);
 };
 
 const create = async (req, res) => {
-  const result = await sales.create(req.body);
-  res.status(201).json(result);
+  const { data, code } = await sales.create(req.body);
+  res.status(status[code]).json(data);
 };
 
 module.exports = {
