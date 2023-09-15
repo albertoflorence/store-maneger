@@ -17,8 +17,15 @@ const create = async (req, res) => {
   handleResponse(res, result);
 };
 
+const deleteOne = async (req, res) => {
+  const { id } = req.params;
+  const result = await sales.deleteOne(id);
+  handleResponse(res, result);
+};
+
 module.exports = {
   getAll,
   getById,
   create,
+  deleteOne,
 };

@@ -1,6 +1,8 @@
 const { sales, salesProducts, products } = require('../models');
 const camelize = require('../utils/camelize');
-const { OK, NOT_FOUND, CREATED } = require('../utils/codes');
+const { OK, NOT_FOUND, CREATED, NO_CONTENT } = require('../utils/codes');
+
+const handleSalesNotFound = () => ({ code: NOT_FOUND, data: { message: 'Sale not found' } });
 
 const getAll = async () => {
     const result = await salesProducts.getAll();
@@ -10,7 +12,7 @@ const getAll = async () => {
 const getById = async (id) => {
   const result = await salesProducts.getById(id);
   if (!result.length) {
-    return { data: { message: 'Sale not found' }, code: NOT_FOUND };
+    return handleSalesNotFound();
   }
   return { data: result.map(camelize), code: OK };
 };
@@ -27,8 +29,18 @@ const create = async (data) => {
   return { data: { id: saleId, itemsSold: data }, code: CREATED };
 };
 
+const deleteOne = async (id) => {
+  const result = await salesProducts.getById(id);
+  if (!result.length) {
+    return handleSalesNotFound();
+  }
+  await sales.deleteOne(id);
+  return { code: NO_CONTENT };
+};
+
 module.exports = {
   getAll,
   getById,
   create,
+  deleteOne,
 };

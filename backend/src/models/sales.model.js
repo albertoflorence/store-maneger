@@ -6,6 +6,12 @@ const create = async () => {
   return insertId;
 };
 
+const deleteOne = async (id) => {
+  const query = 'DELETE FROM sales WHERE id = ?';
+  await connection.execute(query, [id]);
+};
+
 module.exports = {
   create,
+  deleteOne,
 };
