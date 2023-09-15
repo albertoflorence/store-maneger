@@ -22,7 +22,6 @@ const schema = joi
 
 const create = async (req, res, next) => {
   const { error } = schema.validate(req.body);
-  console.log(JSON.stringify(error));
   if (error) {
     const status = error.details[0].type === 'any.required' ? 400 : 422;
     return res.status(status).json({ message: error.message });

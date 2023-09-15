@@ -1,20 +1,20 @@
 const { sales } = require('../services');
-const status = require('../utils/codeToHttpStatus');
+const handleResponse = require('../utils/handleResponse');
 
 const getAll = async (req, res) => {
-  const { code, data } = await sales.getAll();
-  res.status(status[code]).json(data);
+  const result = await sales.getAll();
+  handleResponse(res, result);
 };
 
 const getById = async (req, res) => {
   const { id } = req.params;
-  const { code, data } = await sales.getById(id);
-  res.status(status[code]).json(data);
+  const result = await sales.getById(id);
+  handleResponse(res, result);
 };
 
 const create = async (req, res) => {
-  const { data, code } = await sales.create(req.body);
-  res.status(status[code]).json(data);
+  const result = await sales.create(req.body);
+  handleResponse(res, result);
 };
 
 module.exports = {
