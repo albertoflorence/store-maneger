@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const services = require('../../../src/services');
 const { getAll, getById, create } = require('../../../src/controllers/products.controller');
-const { OK, NOT_FOUND, CREATED } = require('../../../src/utils/codes');
+const { OK, CREATED } = require('../../../src/utils/codes');
 
 use(sinonChai);
 
